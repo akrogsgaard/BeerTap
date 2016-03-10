@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{763AF443-8040-45B1-AF89-306EB564BD43}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BeerTap.DomainServices</RootNamespace>
+    <AssemblyName>BeerTap.DomainServices</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IQ.Foundation.Logging, Version=1.3.0.111, Culture=neutral, PublicKeyToken=b998e1ab7718321e, processorArchitecture=MSIL">
+      <HintPath>..\packages\IQ.Foundation.Logging.1.3.0.111\lib\net40\IQ.Foundation.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IQ.Foundation.Logging.Log4Net, Version=1.3.0.111, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IQ.Foundation.Logging.Log4Net.1.3.0.111\lib\net40\IQ.Foundation.Logging.Log4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IQ.Platform.Framework.Common, Version=3.22.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IQ.Platform.Framework.Common.3.22.1\lib\portable-win+net40+sl50+wp80\IQ.Platform.Framework.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Keg\Commands\UpdateKegCommand.cs" />
+    <Compile Include="Keg\Commands\UpdateKegCommandHandler.cs" />
+    <Compile Include="Keg\Commands\CreateKegCommand.cs" />
+    <Compile Include="Keg\Commands\CreateOfficeCommandHandler.cs" />
+    <Compile Include="Keg\Commands\DeleteKegCommand.cs" />
+    <Compile Include="Keg\Commands\DeleteKegCommandHandler.cs" />
+    <Compile Include="Keg\IKegRepository.cs" />
+    <Compile Include="Keg\Queries\GetKegByTapIdQuery.cs" />
+    <Compile Include="Keg\Queries\GetKegByTapIdQueryHandler.cs" />
+    <Compile Include="Keg\Queries\GetKegByIdQuery.cs" />
+    <Compile Include="Keg\Queries\GetKegByIdQueryHandler.cs" />
+    <Compile Include="Office\Commands\DeleteOfficeCommand.cs" />
+    <Compile Include="Office\Commands\DeleteOfficeCommandHandler.cs" />
+    <Compile Include="Office\Commands\UpdateOfficeCommand.cs" />
+    <Compile Include="Office\Commands\UpdateOfficeCommandHandler.cs" />
+    <Compile Include="Office\Commands\CreateOfficeCommandHandler.cs" />
+    <Compile Include="Office\Commands\CreateOfficeCommand.cs" />
+    <Compile Include="Office\IOfficeRepository.cs" />
+    <Compile Include="Office\Queries\GetAllOfficesQuery.cs" />
+    <Compile Include="Office\Queries\GetAllOfficesQueryHandler.cs" />
+    <Compile Include="Office\Queries\GetOfficeByNameQuery.cs" />
+    <Compile Include="Office\Queries\GetOfficeByNameQueryHandler.cs" />
+    <Compile Include="Office\Queries\GetOfficeByIdQueryHandler.cs" />
+    <Compile Include="Office\Queries\GetOfficeByIdQuery.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tap\Commands\CreateTapCommand.cs" />
+    <Compile Include="Tap\Commands\CreateTapCommandHandler.cs" />
+    <Compile Include="Tap\Commands\DeleteTapCommand.cs" />
+    <Compile Include="Tap\Commands\DeleteTapCommandHandler.cs" />
+    <Compile Include="Tap\ITapRepository.cs" />
+    <Compile Include="Tap\Queries\GetTapByIdQuery.cs" />
+    <Compile Include="Tap\Queries\GetTapByIdQueryHandler.cs" />
+    <Compile Include="Tap\Queries\GetAllTapsByOfficeIdQuery.cs" />
+    <Compile Include="Tap\Queries\GetAllTapsByOfficeIdQueryHandler.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BeerTap.Transport\BeerTap.Transport.csproj">
+      <Project>{96CBF640-BD92-48DF-B4DD-E0FBC7B5E491}</Project>
+      <Name>BeerTap.Transport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{4B8DE985-EA80-4351-9CE9-9F10D2F54E97}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="config\log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\Logging.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

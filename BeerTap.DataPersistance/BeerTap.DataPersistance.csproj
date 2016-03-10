@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33332B45-F973-4BE1-9091-674320EC7BBF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BeerTap.DataPersistance</RootNamespace>
+    <AssemblyName>BeerTap.DataPersistance</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IQ.Foundation.Logging, Version=1.3.0.111, Culture=neutral, PublicKeyToken=b998e1ab7718321e, processorArchitecture=MSIL">
+      <HintPath>..\packages\IQ.Foundation.Logging.1.3.0.111\lib\net40\IQ.Foundation.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IQ.Foundation.Logging.Log4Net, Version=1.3.0.111, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IQ.Foundation.Logging.Log4Net.1.3.0.111\lib\net40\IQ.Foundation.Logging.Log4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IQ.Platform.EntityFrameworkEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IQ.Platform.EntityFrameworkEx.3.0.1\lib\net45\IQ.Platform.EntityFrameworkEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IQ.Platform.Framework.Common, Version=3.22.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IQ.Platform.Framework.Common.3.22.1\lib\portable-win+net40+sl50+wp80\IQ.Platform.Framework.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IQ.Platform.Messaging.Models, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IQ.Platform.Messaging.Models.5.2.0.0\lib\portable-net45+win+wpa81+wp80\IQ.Platform.Messaging.Models.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BeerTapContext.cs" />
+    <Compile Include="BeerTapContextFactory.cs" />
+    <Compile Include="DbContextUtils.cs" />
+    <Compile Include="Exceptions\FormatDatabaseExceptions.cs" />
+    <Compile Include="Migrations\201602270409420_InitialDbCreation.cs" />
+    <Compile Include="Migrations\201602270409420_InitialDbCreation.Designer.cs">
+      <DependentUpon>201602270409420_InitialDbCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602290232062_AddTapIdToKegsTable.cs" />
+    <Compile Include="Migrations\201602290232062_AddTapIdToKegsTable.Designer.cs">
+      <DependentUpon>201602290232062_AddTapIdToKegsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603092156424_AddCapacityColumnToKegsTable.cs" />
+    <Compile Include="Migrations\201603092156424_AddCapacityColumnToKegsTable.Designer.cs">
+      <DependentUpon>201603092156424_AddCapacityColumnToKegsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Keg\KegMapper.cs" />
+    <Compile Include="Repositories\Keg\KegRepository.cs" />
+    <Compile Include="Repositories\Office\OfficeMapper.cs" />
+    <Compile Include="Repositories\Office\OfficeRepository.cs" />
+    <Compile Include="Entities\EntityConfig\KegConfig.cs" />
+    <Compile Include="Entities\EntityConfig\TapConfig.cs" />
+    <Compile Include="Entities\EntityConfig\OfficeConfig.cs" />
+    <Compile Include="Entities\KegRecord.cs" />
+    <Compile Include="Entities\TapRecord.cs" />
+    <Compile Include="Entities\OfficeRecord.cs" />
+    <Compile Include="IDbContextFactory.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Tap\TapMapper.cs" />
+    <Compile Include="Repositories\Tap\TapRepository.cs" />
+    <Compile Include="Version\GetDbVersionQueryHandler.cs" />
+    <Compile Include="Version\GetDbVersion.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="config\log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\Logging.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BeerTap.DomainServices\BeerTap.DomainServices.csproj">
+      <Project>{763AF443-8040-45B1-AF89-306EB564BD43}</Project>
+      <Name>BeerTap.DomainServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeerTap.Transport\BeerTap.Transport.csproj">
+      <Project>{96CBF640-BD92-48DF-B4DD-E0FBC7B5E491}</Project>
+      <Name>BeerTap.Transport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{4B8DE985-EA80-4351-9CE9-9F10D2F54E97}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201602270409420_InitialDbCreation.resx">
+      <DependentUpon>201602270409420_InitialDbCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602290232062_AddTapIdToKegsTable.resx">
+      <DependentUpon>201602290232062_AddTapIdToKegsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603092156424_AddCapacityColumnToKegsTable.resx">
+      <DependentUpon>201603092156424_AddCapacityColumnToKegsTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
