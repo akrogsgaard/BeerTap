@@ -14,7 +14,7 @@ namespace BeerTap.ApiServices.Tap
             var stateOption = Option.None<ApiModel.KegState>();
 
             if (transport.KegId > 0)
-                stateOption = transport.Keg.State.ConvertTo<ApiModel.KegState>();
+                stateOption = transport.KegState.ConvertTo<ApiModel.KegState>();
 
             return new ApiModel.Tap
                 {

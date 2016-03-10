@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201603092156424_AddCapacityColumnToKegsTable.Designer.cs">
       <DependentUpon>201603092156424_AddCapacityColumnToKegsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603102240499_MoveKegStateFromKegsTableToTapsTable.cs" />
+    <Compile Include="Migrations\201603102240499_MoveKegStateFromKegsTableToTapsTable.Designer.cs">
+      <DependentUpon>201603102240499_MoveKegStateFromKegsTableToTapsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\Keg\KegMapper.cs" />
     <Compile Include="Repositories\Keg\KegRepository.cs" />
     <Compile Include="Repositories\Office\OfficeMapper.cs" />
@@ -144,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603092156424_AddCapacityColumnToKegsTable.resx">
       <DependentUpon>201603092156424_AddCapacityColumnToKegsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603102240499_MoveKegStateFromKegsTableToTapsTable.resx">
+      <DependentUpon>201603102240499_MoveKegStateFromKegsTableToTapsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

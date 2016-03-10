@@ -7,40 +7,31 @@ using Infrastructure;
 
 namespace BeerTap.DomainServices.Tap.Commands
 {
-    public interface ICreateTapCommandHandler : IAsyncCommandHandler<CreateTapCommand>
-    {
-        Task<int> HandleCustomAsync(CreateTapCommand command, CancellationToken cancellationToken = new CancellationToken());
-    }
-
-    public class CreateTapCommandHandler : ICreateTapCommandHandler
+    public class UpdateTapCommandHandler : IAsyncCommandHandler<UpdateTapCommand>
     {
         private readonly ITapRepository _tapRepository;
 
-        public CreateTapCommandHandler(ITapRepository tapRepository)
+        public UpdateTapCommandHandler(ITapRepository tapRepository)
         {
             if (tapRepository == null) throw new ArgumentNullException("tapRepository");
             _tapRepository = tapRepository;
         }
 
-        public async Task HandleAsync(CreateTapCommand command, CancellationToken cancellationToken = new CancellationToken())
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<int> HandleCustomAsync(CreateTapCommand command, CancellationToken cancellationToken = new CancellationToken())
+        public async Task HandleAsync(UpdateTapCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
             if (command == null) throw new ArgumentNullException("command");
 
             var tapDto = new TapDto
             {
+                Id = command.Id,
                 OfficeId = command.OfficeId,
-                CreatedByUserId = command.CreatedByUserId,
-                CreatedDateUtc = TimeProvider.Current.UtcNow,
-                UpdatedByUserId = command.CreatedByUserId,
+                KegId = command.KegId,
+                KegState = command.KegState,
+                UpdatedByUserId = command.UpdatedByUserId,
                 UpdatedDateUtc = TimeProvider.Current.UtcNow,
             };
 
-            return await _tapRepository.SaveNewAsync(tapDto).ConfigureAwait(false);
+            await _tapRepository.UpdateAsync(tapDto).ConfigureAwait(false);
         }
     }
 }

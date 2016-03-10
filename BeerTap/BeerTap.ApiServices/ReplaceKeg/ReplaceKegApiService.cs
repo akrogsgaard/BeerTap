@@ -5,8 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using BeerTap.ApiServices.RequestContext;
 using BeerTap.DomainServices.Keg.Commands;
+using BeerTap.DomainServices.Tap.Commands;
+using BeerTap.DomainServices.Tap.Queries;
 using BeerTap.Model.Exceptions;
+using BeerTap.Transport;
 using IQ.Foundation.Logging;
+using IQ.Platform.Framework.Common;
 using IQ.Platform.Framework.Common.CQS;
 using IQ.Platform.Framework.WebApi;
 using ApiModel = BeerTap.Model;
@@ -18,6 +22,8 @@ namespace BeerTap.ApiServices.ReplaceKeg
         private readonly IExtractDataFromARequestContext _requestContextExtractor;
         private readonly IAsyncCommandHandler<CreateKegCommand> _createKeg;
         private readonly IAsyncCommandHandler<DeleteKegCommand> _deleteKeg;
+        private readonly IAsyncQueryHandler<GetTapByIdQuery, Option<TapDto>> _getTapById;
+        private readonly IAsyncCommandHandler<UpdateTapCommand> _updateTap;
 
         private Lazy<ILog> _lazyLogger;
 
@@ -29,16 +35,22 @@ namespace BeerTap.ApiServices.ReplaceKeg
         public ReplaceKegApiService(
                 IExtractDataFromARequestContext requestContextExtractor,
                 IAsyncCommandHandler<CreateKegCommand> createKeg,
-                IAsyncCommandHandler<DeleteKegCommand> deleteKeg
+                IAsyncCommandHandler<DeleteKegCommand> deleteKeg,
+                IAsyncQueryHandler<GetTapByIdQuery, Option<TapDto>> getTapById,
+                IAsyncCommandHandler<UpdateTapCommand> updateTap
             )
         {
             if (requestContextExtractor == null) throw new ArgumentNullException("requestContextExtractor");
             if (createKeg == null) throw new ArgumentNullException(nameof(createKeg));
             if (deleteKeg == null) throw new ArgumentNullException(nameof(deleteKeg));
+            if (getTapById == null) throw new ArgumentNullException(nameof(getTapById));
+            if (updateTap == null) throw new ArgumentNullException(nameof(updateTap));
 
             _requestContextExtractor = requestContextExtractor;
             _createKeg = createKeg;
             _deleteKeg = deleteKeg;
+            _getTapById = getTapById;
+            _updateTap = updateTap;
 
             _lazyLogger = new Lazy<ILog>(LogManager.GetCurrentClassLogger);
         }
@@ -55,8 +67,14 @@ namespace BeerTap.ApiServices.ReplaceKeg
 
                 await _deleteKeg.HandleAsync(new DeleteKegCommand(resource.Id, userId));
 
-                var command = new CreateKegCommand(tapId, ApiModel.KegState.Full.ToString(), resource.BeerName, resource.Capacity, resource.Volume, userId);
+                var command = new CreateKegCommand(tapId, resource.BeerName, resource.Capacity, resource.Volume, userId);
                 await _createKeg.HandleAsync(command).ConfigureAwait(false);
+
+                var tapOption = await _getTapById.HandleAsync(new GetTapByIdQuery(tapId)).ConfigureAwait(false);
+                var tapDto = tapOption.EnsureValue();
+
+                //update the tap with the new KegId.
+                await _updateTap.HandleAsync(new UpdateTapCommand(tapDto.Id, tapDto.OfficeId, resource.Id, ApiModel.KegState.Full.ToString(), userId)).ConfigureAwait(false);
 
                 return new ResourceCreationResult<ApiModel.SupportResources.ReplaceKeg, int>(resource);
             }

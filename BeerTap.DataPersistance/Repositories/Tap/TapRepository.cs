@@ -88,6 +88,30 @@ namespace BeerTap.DataPersistance.Repositories.Tap
             }
         }
 
+        public async Task UpdateAsync(TapDto tapDto)
+        {
+            try
+            {
+                using (var context = _contextFactory.CreateContext())
+                {
+                    var tapRecord = await context.Taps.FindAsync(tapDto.Id).ConfigureAwait(false);
+
+                    tapRecord.KegId = tapDto.KegId;
+                    tapRecord.UpdatedByUserId = tapDto.UpdatedByUserId;
+                    tapRecord.UpdatedDateUtc = tapDto.UpdatedDateUtc;
+
+                    context.Taps.Add(tapRecord);
+                    await context.SaveChangesAsync().ConfigureAwait(false);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                var exception = DbContextUtils.ConvertDbUpdateException(ex);
+                Logger.Error(new ExpandableLogMessage(exception.ToString(), new KeyValuePair<string, object>("failureMessage", exception.ToString())));
+                throw exception;
+            }
+        }
+
         public async Task DeleteAsync(int id, int userId)
         {
             try
@@ -110,5 +134,7 @@ namespace BeerTap.DataPersistance.Repositories.Tap
                 throw exception;
             }
         }
+
+        
     }
 }

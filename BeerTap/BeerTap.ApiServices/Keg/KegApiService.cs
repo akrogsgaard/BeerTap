@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using BeerTap.ApiServices.RequestContext;
 using BeerTap.DomainServices.Keg.Commands;
 using BeerTap.DomainServices.Keg.Queries;
+using BeerTap.DomainServices.Tap.Commands;
+using BeerTap.DomainServices.Tap.Queries;
 using BeerTap.Model.Exceptions;
 using BeerTap.Transport;
 using IQ.Foundation.Logging;
@@ -30,7 +32,9 @@ namespace BeerTap.ApiServices.Keg
         private readonly IAsyncCommandHandler<DeleteKegCommand> _deleteKeg;
         private readonly IAsyncQueryHandler<GetKegByIdQuery, Option<KegDto>> _getKegById;
         private readonly IAsyncQueryHandler<GetKegByTapIdQuery, Option<KegDto>> _getKegByTapId;
-        
+        private readonly IAsyncQueryHandler<GetTapByIdQuery, Option<TapDto>> _getTapById;
+        private readonly IAsyncCommandHandler<UpdateTapCommand> _updateTap;
+
         private Lazy<ILog> _lazyLogger;
 
         ILog Logger
@@ -44,7 +48,9 @@ namespace BeerTap.ApiServices.Keg
                 ICreateKegCommandHandler createKeg,
                 IAsyncCommandHandler<DeleteKegCommand> deleteKeg,
                 IAsyncQueryHandler<GetKegByIdQuery, Option<KegDto>> getKegById,
-                IAsyncQueryHandler<GetKegByTapIdQuery, Option<KegDto>> getKegByTapId
+                IAsyncQueryHandler<GetKegByTapIdQuery, Option<KegDto>> getKegByTapId,
+                IAsyncQueryHandler<GetTapByIdQuery, Option<TapDto>> getTapById,
+                IAsyncCommandHandler<UpdateTapCommand> updateTap
             )
         {
             if (requestContextExtractor == null) throw new ArgumentNullException("requestContextExtractor");
@@ -53,12 +59,16 @@ namespace BeerTap.ApiServices.Keg
             if (deleteKeg == null) throw new ArgumentNullException("deleteKeg");
             if (getKegById == null) throw new ArgumentNullException("getKegById");
             if (getKegByTapId == null) throw new ArgumentNullException("getAllKegsByOfficeId");
+            if (getTapById == null) throw new ArgumentNullException(nameof(getTapById));
+            if (updateTap == null) throw new ArgumentNullException(nameof(updateTap));
             _requestContextExtractor = requestContextExtractor;
             _mapper = mapper;
             _createKeg = createKeg;
             _deleteKeg = deleteKeg;
             _getKegById = getKegById;
             _getKegByTapId = getKegByTapId;
+            _getTapById = getTapById;
+            _updateTap = updateTap;
 
             _lazyLogger = new Lazy<ILog>(LogManager.GetCurrentClassLogger);
         }
@@ -73,15 +83,21 @@ namespace BeerTap.ApiServices.Keg
                 var userId = _requestContextExtractor.ExtractUserIdFromRequest(context);
                 var tapId = _requestContextExtractor.ExtractTapId<ApiModel.Keg>(context);
 
-                var command = new CreateKegCommand(tapId, ApiModel.KegState.Full.ToString(), resource.BeerName, resource.Capacity, resource.Volume, userId);
+                var command = new CreateKegCommand(tapId, resource.BeerName, resource.Capacity, resource.Volume, userId);
 
                 Logger.Debug(string.Format("Creating Keg record: {0}", JsonConvert.SerializeObject(resource)));
 
                 resource.Id = await _createKeg.HandleCustomAsync(command);
 
-                var Keg = await GetAsync(resource.Id, context, cancellation).ConfigureAwait(false);
+                var keg = await GetAsync(resource.Id, context, cancellation).ConfigureAwait(false);
 
-                return new ResourceCreationResult<ApiModel.Keg, int>(Keg);
+                var tapOption = await _getTapById.HandleAsync(new GetTapByIdQuery(tapId)).ConfigureAwait(false);
+                var tapDto = tapOption.EnsureValue();
+
+                //update the tap with the new KegId.
+                await _updateTap.HandleAsync(new UpdateTapCommand(tapDto.Id, tapDto.OfficeId, keg.Id, ApiModel.KegState.Full.ToString(), userId)).ConfigureAwait(false);
+                
+                return new ResourceCreationResult<ApiModel.Keg, int>(keg);
             }
             catch (BeerTapServiceException ex)
             {

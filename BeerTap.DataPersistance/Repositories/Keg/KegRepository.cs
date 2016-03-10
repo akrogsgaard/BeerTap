@@ -93,7 +93,6 @@ namespace BeerTap.DataPersistance.Repositories.Keg
         {
             try
             {
-
                 using (var context = _contextFactory.CreateContext())
                 {
                     var kegRecord = await context.Kegs.FindAsync(kegDto.Id).ConfigureAwait(false);

@@ -34,7 +34,6 @@ namespace BeerTap.DomainServices.Keg.Commands
             var kegDto = new KegDto
             {
                 TapId = command.TapId,
-                State = command.KegState,
                 BeerName = command.BeerName,
                 Capacity = command.Capacity,
                 Volume = command.Volume,

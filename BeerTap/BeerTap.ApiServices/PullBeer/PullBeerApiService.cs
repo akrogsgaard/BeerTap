@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using BeerTap.ApiServices.RequestContext;
 using BeerTap.DomainServices.Keg.Commands;
 using BeerTap.DomainServices.Keg.Queries;
+using BeerTap.DomainServices.Tap.Commands;
+using BeerTap.DomainServices.Tap.Queries;
 using BeerTap.Model.Exceptions;
 using BeerTap.Transport;
 using IQ.Foundation.Logging;
@@ -21,6 +23,8 @@ namespace BeerTap.ApiServices.PullBeer
         private readonly IExtractDataFromARequestContext _requestContextExtractor;
         private readonly IAsyncCommandHandler<UpdateKegCommand> _updateKeg;
         private readonly IAsyncQueryHandler<GetKegByTapIdQuery, Option<KegDto>> _getKegByTapId;
+        private readonly IAsyncQueryHandler<GetTapByIdQuery, Option<TapDto>> _getTapById;
+        private readonly IAsyncCommandHandler<UpdateTapCommand> _updateTap;
 
         private Lazy<ILog> _lazyLogger;
 
@@ -32,16 +36,22 @@ namespace BeerTap.ApiServices.PullBeer
         public PullBeerApiService(
                 IExtractDataFromARequestContext requestContextExtractor,
                 IAsyncCommandHandler<UpdateKegCommand> updateKeg,
-                IAsyncQueryHandler<GetKegByTapIdQuery, Option<KegDto>> getKegByTapId
+                IAsyncQueryHandler<GetKegByTapIdQuery, Option<KegDto>> getKegByTapId, 
+                IAsyncQueryHandler<GetTapByIdQuery, Option<TapDto>> getTapById,
+                IAsyncCommandHandler<UpdateTapCommand> updateTap
             )
         {
             if (requestContextExtractor == null) throw new ArgumentNullException("requestContextExtractor");
             if (updateKeg == null) throw new ArgumentNullException("updateKeg");
             if (getKegByTapId == null) throw new ArgumentNullException("getKegByTapId");
+            if (getTapById == null) throw new ArgumentNullException(nameof(getTapById));
+            if (updateTap == null) throw new ArgumentNullException(nameof(updateTap));
 
             _requestContextExtractor = requestContextExtractor;
             _updateKeg = updateKeg;
             _getKegByTapId = getKegByTapId;
+            _getTapById = getTapById;
+            _updateTap = updateTap;
 
             _lazyLogger = new Lazy<ILog>(LogManager.GetCurrentClassLogger);
         }
@@ -62,10 +72,17 @@ namespace BeerTap.ApiServices.PullBeer
                     resource.Volume = kegDto.Volume;
 
                 kegDto.Volume = kegDto.Volume - resource.Volume;
-                kegDto.State = GetKegState(kegDto);
 
-                var command = new UpdateKegCommand(kegDto.Id, kegDto.TapId, kegDto.State, kegDto.BeerName, kegDto.Capacity, kegDto.Volume, userId);
+                var command = new UpdateKegCommand(kegDto.Id, kegDto.TapId, kegDto.BeerName, kegDto.Capacity, kegDto.Volume, userId);
                 await _updateKeg.HandleAsync(command).ConfigureAwait(false);
+
+                var tapOption = await _getTapById.HandleAsync(new GetTapByIdQuery(kegDto.TapId)).ConfigureAwait(false);
+                var tapDto = tapOption.EnsureValue();
+
+                var kegState = GetKegState(tapDto.KegState, kegDto);
+
+                //update the kegState in the tap.
+                await _updateTap.HandleAsync(new UpdateTapCommand(tapDto.Id, tapDto.OfficeId, kegDto.Id, kegState, userId)).ConfigureAwait(false);
 
                 return new ResourceCreationResult<ApiModel.SupportResources.PullBeer, int>(resource);
             }
@@ -83,11 +100,11 @@ namespace BeerTap.ApiServices.PullBeer
             }
         }
 
-        private string GetKegState(KegDto kegDto)
+        private string GetKegState(string state, KegDto kegDto)
         {
             var lowVolumeLimit = kegDto.Capacity * .25;
 
-            if (kegDto.State == ApiModel.KegState.Full.ToString())
+            if (state == ApiModel.KegState.Full.ToString())
                 return ApiModel.KegState.GoingDown.ToString();
 
             if(kegDto.Volume > lowVolumeLimit)

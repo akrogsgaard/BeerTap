@@ -80,7 +80,9 @@
     <Compile Include="Office\Queries\GetOfficeByIdQueryHandler.cs" />
     <Compile Include="Office\Queries\GetOfficeByIdQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tap\Commands\UpdateTapCommand.cs" />
     <Compile Include="Tap\Commands\CreateTapCommand.cs" />
+    <Compile Include="Tap\Commands\UpdateTapCommandHandler.cs" />
     <Compile Include="Tap\Commands\CreateTapCommandHandler.cs" />
     <Compile Include="Tap\Commands\DeleteTapCommand.cs" />
     <Compile Include="Tap\Commands\DeleteTapCommandHandler.cs" />

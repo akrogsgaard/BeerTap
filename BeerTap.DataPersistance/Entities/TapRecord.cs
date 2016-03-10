@@ -11,6 +11,7 @@ namespace BeerTap.DataPersistance.Entities
         public int Id { get; set; }
         public int OfficeId { get; set; }
         public int KegId { get; set; }
+        public string KegState { get; set; }
         public int CreatedByUserId { get; set; }
         public DateTime CreatedDateUtc { get; set; }
         public int UpdatedByUserId { get; set; }

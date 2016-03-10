@@ -13,7 +13,6 @@ namespace BeerTap.DataPersistance.Entities
         public string BeerName { get; set; }
         public int Capacity { get; set; }
         public int Volume { get; set; }
-        public string State { get; set; }
         public int CreatedByUserId { get; set; }
         public DateTime CreatedDateUtc { get; set; }
         public int UpdatedByUserId { get; set; }
