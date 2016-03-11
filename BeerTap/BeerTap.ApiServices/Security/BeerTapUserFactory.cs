@@ -8,7 +8,7 @@ namespace BeerTap.ApiServices.Security
 {
     public class BeerTapUserFactory : ApiUserFactory<BeerTapUser, UserAuthData>
     {
-        const int DefaultUserId = -1;
+        const int DefaultUserId = 1;
 
         readonly IExtractDataFromAccessToken _extractUserIdFromAccessToken;
 
