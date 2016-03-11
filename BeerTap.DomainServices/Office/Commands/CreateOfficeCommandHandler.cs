@@ -18,7 +18,7 @@ namespace BeerTap.DomainServices.Office.Commands
 
         public CreateOfficeCommandHandler(IOfficeRepository officeRepository)
         {
-            if (officeRepository == null) throw new ArgumentNullException("officeRepository");
+            if (officeRepository == null) throw new ArgumentNullException(nameof(officeRepository));
             _officeRepository = officeRepository;
         }
 
@@ -29,7 +29,7 @@ namespace BeerTap.DomainServices.Office.Commands
 
         public async Task<int> HandleCustomAsync(CreateOfficeCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            if (command == null) throw new ArgumentNullException("command");
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             var officeDto = new OfficeDto
             {

@@ -24,9 +24,9 @@ namespace BeerTap.WebApi.Infrastructure.Installers
                                        Assembly apiDomainServiceInterfacesAssembly)
         {
             if (apiDomainServicesAssembly == null)
-                throw new ArgumentNullException("apiDomainServicesAssembly");
+                throw new ArgumentNullException(nameof(apiDomainServicesAssembly));
             if (apiDomainServiceInterfacesAssembly == null)
-                throw new ArgumentNullException("apiDomainServiceInterfacesAssembly");
+                throw new ArgumentNullException(nameof(apiDomainServiceInterfacesAssembly));
 
             _customDomainServiceResolver = customDomainServiceResolver;
             _apiDomainServicesAssembly = apiDomainServicesAssembly;

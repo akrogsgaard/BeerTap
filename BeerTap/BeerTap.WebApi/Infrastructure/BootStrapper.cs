@@ -29,7 +29,7 @@ namespace BeerTap.WebApi.Infrastructure
         {
 
             if (config == null)
-                throw new ArgumentNullException("config");
+                throw new ArgumentNullException(nameof(config));
 
             var hconfig = SetConfiguration(config, postConfigure);
 
@@ -80,7 +80,7 @@ namespace BeerTap.WebApi.Infrastructure
         static HypermediaConfiguration SetConfiguration(HttpConfiguration config, Action<HttpConfiguration> postConfigure)
         {
             if (config == null)
-                throw new ArgumentNullException("config");
+                throw new ArgumentNullException(nameof(config));
 
             // prevents checking error detail policy that fails (for IncludeErrorDetailPolicy.Default)
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;

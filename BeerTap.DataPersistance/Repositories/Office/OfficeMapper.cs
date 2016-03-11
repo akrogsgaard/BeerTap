@@ -10,7 +10,7 @@ namespace BeerTap.DataPersistance.Repositories.Office
     {
         public OfficeDto Map(OfficeRecord source)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             return new OfficeDto
                 {
@@ -26,7 +26,7 @@ namespace BeerTap.DataPersistance.Repositories.Office
 
         public OfficeRecord Map(OfficeDto source)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             return new OfficeRecord
                 {

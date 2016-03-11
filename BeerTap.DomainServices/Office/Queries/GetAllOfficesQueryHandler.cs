@@ -13,7 +13,7 @@ namespace BeerTap.DomainServices.Office.Queries
 
         public GetAllOfficesQueryHandler(IOfficeRepository officeRepository)
         {
-            if (officeRepository == null) throw new ArgumentNullException("officeRepository");
+            if (officeRepository == null) throw new ArgumentNullException(nameof(officeRepository));
             _officeRepository = officeRepository;
         }
 

@@ -13,13 +13,13 @@ namespace BeerTap.DomainServices.Keg.Commands
 
         public UpdateKegCommandHandler(IKegRepository kegRepository)
         {
-            if (kegRepository == null) throw new ArgumentNullException("KegRepository");
+            if (kegRepository == null) throw new ArgumentNullException(nameof(kegRepository));
             _kegRepository = kegRepository;
         }
 
         public async Task HandleAsync(UpdateKegCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            if (command == null) throw new ArgumentNullException("command");
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             var kegDto = new KegDto
             {

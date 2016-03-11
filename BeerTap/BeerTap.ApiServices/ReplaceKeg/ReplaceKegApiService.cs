@@ -40,7 +40,7 @@ namespace BeerTap.ApiServices.ReplaceKeg
                 IAsyncCommandHandler<UpdateTapCommand> updateTap
             )
         {
-            if (requestContextExtractor == null) throw new ArgumentNullException("requestContextExtractor");
+            if (requestContextExtractor == null) throw new ArgumentNullException(nameof(requestContextExtractor));
             if (createKeg == null) throw new ArgumentNullException(nameof(createKeg));
             if (deleteKeg == null) throw new ArgumentNullException(nameof(deleteKeg));
             if (getTapById == null) throw new ArgumentNullException(nameof(getTapById));
@@ -57,8 +57,8 @@ namespace BeerTap.ApiServices.ReplaceKeg
 
         public async Task<ResourceCreationResult<ApiModel.SupportResources.ReplaceKeg, int>> CreateAsync(ApiModel.SupportResources.ReplaceKeg resource, IRequestContext context, CancellationToken cancellation)
         {
-            if (resource == null) throw new ArgumentNullException("resource");
-            if (context == null) throw new ArgumentNullException("context");
+            if (resource == null) throw new ArgumentNullException(nameof(resource));
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             try
             {

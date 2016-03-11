@@ -30,9 +30,9 @@ namespace BeerTap.DataPersistance.Repositories.Keg
             IMapper<KegRecord, KegDto> dtoMapper,
             IMapper<KegDto, KegRecord> recordMapper)
         {
-            if (contextFactory == null) throw new ArgumentNullException("contextFactory");
-            if (dtoMapper == null) throw new ArgumentNullException("dtoMapper");
-            if (recordMapper == null) throw new ArgumentNullException("recordMapper");
+            if (contextFactory == null) throw new ArgumentNullException(nameof(contextFactory));
+            if (dtoMapper == null) throw new ArgumentNullException(nameof(dtoMapper));
+            if (recordMapper == null) throw new ArgumentNullException(nameof(recordMapper));
             _contextFactory = contextFactory;
             _dtoMapper = dtoMapper;
             _recordMapper = recordMapper;

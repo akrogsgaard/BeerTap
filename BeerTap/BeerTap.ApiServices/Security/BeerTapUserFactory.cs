@@ -15,7 +15,7 @@ namespace BeerTap.ApiServices.Security
         public BeerTapUserFactory(IExtractDataFromAccessToken extractUserIdFromAccessToken)
             : base(new HttpRequestDataStore<UserAuthData>())
         {
-            if (extractUserIdFromAccessToken == null) throw new ArgumentNullException("extractUserIdFromAccessToken");
+            if (extractUserIdFromAccessToken == null) throw new ArgumentNullException(nameof(extractUserIdFromAccessToken));
             _extractUserIdFromAccessToken = extractUserIdFromAccessToken;
         }
 

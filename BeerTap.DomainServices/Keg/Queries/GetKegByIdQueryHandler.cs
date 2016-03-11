@@ -13,7 +13,7 @@ namespace BeerTap.DomainServices.Keg.Queries
 
         public GetKegByIdQueryHandler(IKegRepository kegRepository)
         {
-            if (kegRepository == null) throw new ArgumentNullException("KegRepository");
+            if (kegRepository == null) throw new ArgumentNullException(nameof(kegRepository));
             _kegRepository = kegRepository;
         }
 

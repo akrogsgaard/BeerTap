@@ -8,7 +8,7 @@ namespace BeerTap.ApiServices.Keg
     {
         public ApiModel.Keg MapToResource(KegDto transport)
         {
-            if (transport == null) throw new ArgumentNullException("transport");
+            if (transport == null) throw new ArgumentNullException(nameof(transport));
 
             return new ApiModel.Keg()
                 {

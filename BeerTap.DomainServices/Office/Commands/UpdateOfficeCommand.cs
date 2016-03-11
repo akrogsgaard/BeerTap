@@ -10,7 +10,7 @@ namespace BeerTap.DomainServices.Office.Commands
 
         public UpdateOfficeCommand(int id, string name, int createdByUserId)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
             _id = id;
             _name = name;
             _createdByUserId = createdByUserId;

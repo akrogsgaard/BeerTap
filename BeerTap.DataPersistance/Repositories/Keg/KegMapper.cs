@@ -10,7 +10,7 @@ namespace BeerTap.DataPersistance.Repositories.Keg
     {
         public KegDto Map(KegRecord source)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             return new KegDto
                 {
@@ -28,7 +28,7 @@ namespace BeerTap.DataPersistance.Repositories.Keg
 
         public KegRecord Map(KegDto source)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             return new KegRecord
                 {

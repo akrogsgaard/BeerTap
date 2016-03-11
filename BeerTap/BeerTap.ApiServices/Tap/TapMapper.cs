@@ -9,7 +9,7 @@ namespace BeerTap.ApiServices.Tap
     {
         public ApiModel.Tap MapToResource(TapDto transport)
         {
-            if (transport == null) throw new ArgumentNullException("transport");
+            if (transport == null) throw new ArgumentNullException(nameof(transport));
 
             var stateOption = Option.None<ApiModel.KegState>();
 

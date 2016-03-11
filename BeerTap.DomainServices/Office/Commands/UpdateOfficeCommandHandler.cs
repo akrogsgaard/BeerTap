@@ -13,14 +13,14 @@ namespace BeerTap.DomainServices.Office.Commands
 
         public UpdateOfficeCommandHandler(IOfficeRepository officeRepository)
         {
-            if (officeRepository == null) throw new ArgumentNullException("officeRepository");
+            if (officeRepository == null) throw new ArgumentNullException(nameof(officeRepository));
             _officeRepository = officeRepository;
         }
 
 
         public async Task HandleAsync(UpdateOfficeCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            if (command == null) throw new ArgumentNullException("command");
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             var officeDto = new OfficeDto
                 {

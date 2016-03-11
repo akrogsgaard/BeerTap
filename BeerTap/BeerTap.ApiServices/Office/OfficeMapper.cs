@@ -8,7 +8,7 @@ namespace BeerTap.ApiServices.Office
     {
         public ApiModel.Office MapToResource(OfficeDto transport)
         {
-            if (transport == null) throw new ArgumentNullException("transport");
+            if (transport == null) throw new ArgumentNullException(nameof(transport));
 
             return new ApiModel.Office
                 {

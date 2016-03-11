@@ -16,7 +16,7 @@ namespace BeerTap.WebApi.Infrastructure.Installers
 
         public ResourceMapperInstaller(IEnumerable<Assembly> assemblies)
         {
-            if (assemblies == null) throw new ArgumentNullException("assemblies");
+            if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
 
             _assemblies = assemblies;
         }

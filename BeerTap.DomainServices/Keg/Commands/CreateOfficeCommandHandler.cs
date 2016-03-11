@@ -18,7 +18,7 @@ namespace BeerTap.DomainServices.Keg.Commands
 
         public CreateKegCommandHandler(IKegRepository kegRepository)
         {
-            if (kegRepository == null) throw new ArgumentNullException("KegRepository");
+            if (kegRepository == null) throw new ArgumentNullException(nameof(kegRepository));
             _kegRepository = kegRepository;
         }
 
@@ -29,7 +29,7 @@ namespace BeerTap.DomainServices.Keg.Commands
 
         public async Task<int> HandleCustomAsync(CreateKegCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            if (command == null) throw new ArgumentNullException("command");
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             var kegDto = new KegDto
             {

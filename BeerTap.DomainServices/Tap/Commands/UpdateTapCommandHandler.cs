@@ -13,13 +13,13 @@ namespace BeerTap.DomainServices.Tap.Commands
 
         public UpdateTapCommandHandler(ITapRepository tapRepository)
         {
-            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
+            if (tapRepository == null) throw new ArgumentNullException(nameof(tapRepository));
             _tapRepository = tapRepository;
         }
 
         public async Task HandleAsync(UpdateTapCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            if (command == null) throw new ArgumentNullException("command");
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             var tapDto = new TapDto
             {

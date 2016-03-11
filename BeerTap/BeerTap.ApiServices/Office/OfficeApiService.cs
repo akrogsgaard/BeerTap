@@ -40,9 +40,10 @@ namespace BeerTap.ApiServices.Office
                 IAsyncQueryHandler<GetAllOfficesQuery, IEnumerable<OfficeDto>> getAllOffices
             )
         {
-            if (requestContextExtractor == null) throw new ArgumentNullException("requestContextExtractor");
-            if (mapper == null) throw new ArgumentNullException("mapper");
-            if (getAllOffices == null) throw new ArgumentNullException("getAllOffices");
+            if (requestContextExtractor == null) throw new ArgumentNullException(nameof(requestContextExtractor));
+            if (mapper == null) throw new ArgumentNullException(nameof(mapper));
+            if (getAllOffices == null) throw new ArgumentNullException(nameof(getAllOffices));
+
             _requestContextExtractor = requestContextExtractor;
             _mapper = mapper;
             _getOfficeById = getOfficeById;

@@ -12,9 +12,9 @@ namespace BeerTap.IntegrationTests
         {
 
             if (target == null)
-                throw new ArgumentNullException("target");
+                throw new ArgumentNullException(nameof(target));
             if (string.IsNullOrWhiteSpace(methodName))
-                throw new ArgumentNullException("methodName");
+                throw new ArgumentNullException(nameof(methodName));
 
             var resolveMethod = target.GetType().GetMethod(methodName, Type.EmptyTypes);
 

@@ -14,13 +14,13 @@ namespace BeerTap.ApiServices.RequestContext
 
         public RequestContextExtractor(IGetDataFromHttpRequest<BeerTapUser> getApiUserFromHttpRequest)
         {
-            if (getApiUserFromHttpRequest == null) throw new ArgumentNullException("getApiUserFromHttpRequest");
+            if (getApiUserFromHttpRequest == null) throw new ArgumentNullException(nameof(getApiUserFromHttpRequest));
             _getApiUserFromHttpRequest = getApiUserFromHttpRequest;
         }
 
         public int ExtractOfficeId<TResource>(IRequestContext context) where TResource : class
         {
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             var option = context.UriParameters.GetByName<int>("officeId");
             var officeId = option.EnsureValue(() => context.CreateHttpResponseException<TResource>("Cannot find office identifier in the uri", HttpStatusCode.BadRequest));
@@ -31,7 +31,7 @@ namespace BeerTap.ApiServices.RequestContext
 
         public int ExtractTapId<TResource>(IRequestContext context) where TResource : class
         {
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             var option = context.UriParameters.GetByName<int>("tapId");
             var tapId = option.EnsureValue(() => context.CreateHttpResponseException<TResource>("Cannot find tap identifier in the uri", HttpStatusCode.BadRequest));
@@ -42,7 +42,7 @@ namespace BeerTap.ApiServices.RequestContext
 
         public int ExtractETag<TResource>(IRequestContext context) where TResource : class
         {
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             var entityTagHeaderValue = GetEntityTagHeaderValue<TResource>(context);
 
@@ -58,7 +58,7 @@ namespace BeerTap.ApiServices.RequestContext
 
         public int ExtractUserIdFromRequest(IRequestContext context)
         {
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             // Try to get the UserId from the TaxApiUser. If we can't find it return -1
             var userId = _getApiUserFromHttpRequest.Get(context.Request).Select(x => x.UserId).ValueOrDefault(-1);
@@ -67,7 +67,7 @@ namespace BeerTap.ApiServices.RequestContext
 
         public string ExtractTokenFromRequest<TResource>(IRequestContext context) where TResource : class
         {
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             var tokenOption = _getApiUserFromHttpRequest.Get(context.Request).SelectMany(user => user.Authentication).Select(x => x.AccessToken);
             var token = tokenOption.EnsureValue(() => context.CreateHttpResponseException<TResource>("Could not extract authorization token from request.", HttpStatusCode.InternalServerError));

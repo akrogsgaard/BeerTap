@@ -11,7 +11,7 @@ namespace BeerTap.DomainServices.Office.Queries
 
         public GetOfficeByNameQuery(string name)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
             _name = name;
         }
 

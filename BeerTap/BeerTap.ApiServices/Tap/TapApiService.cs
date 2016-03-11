@@ -36,10 +36,10 @@ namespace BeerTap.ApiServices.Tap
                 IAsyncQueryHandler<GetAllTapsByOfficeIdQuery, IEnumerable<TapDto>> getAllTapsByOfficeId
             )
         {
-            if (requestContextExtractor == null) throw new ArgumentNullException("requestContextExtractor");
-            if (mapper == null) throw new ArgumentNullException("mapper");
-            if (getTapById == null) throw new ArgumentNullException("getTapById");
-            if (getAllTapsByOfficeId == null) throw new ArgumentNullException("getAllTapsByOfficeId");
+            if (requestContextExtractor == null) throw new ArgumentNullException(nameof(requestContextExtractor));
+            if (mapper == null) throw new ArgumentNullException(nameof(mapper));
+            if (getTapById == null) throw new ArgumentNullException(nameof(getTapById));
+            if (getAllTapsByOfficeId == null) throw new ArgumentNullException(nameof(getAllTapsByOfficeId));
             _requestContextExtractor = requestContextExtractor;
             _mapper = mapper;
             _getTapById = getTapById;

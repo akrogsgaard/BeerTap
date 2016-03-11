@@ -13,7 +13,7 @@ namespace BeerTap.DomainServices.Tap.Queries
 
         public GetTapByIdQueryHandler(ITapRepository tapRepository)
         {
-            if (tapRepository == null) throw new ArgumentNullException("TapRepository");
+            if (tapRepository == null) throw new ArgumentNullException(nameof(tapRepository));
             _tapRepository = tapRepository;
         }
 

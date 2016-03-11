@@ -10,7 +10,7 @@ namespace BeerTap.DataPersistance.Repositories.Tap
     {
         public TapDto Map(TapRecord source)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             return new TapDto
                 {
@@ -27,7 +27,7 @@ namespace BeerTap.DataPersistance.Repositories.Tap
 
         public TapRecord Map(TapDto source)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             return new TapRecord
                 {

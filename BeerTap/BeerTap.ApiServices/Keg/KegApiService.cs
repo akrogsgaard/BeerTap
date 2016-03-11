@@ -53,14 +53,15 @@ namespace BeerTap.ApiServices.Keg
                 IAsyncCommandHandler<UpdateTapCommand> updateTap
             )
         {
-            if (requestContextExtractor == null) throw new ArgumentNullException("requestContextExtractor");
-            if (mapper == null) throw new ArgumentNullException("mapper");
-            if (createKeg == null) throw new ArgumentNullException("createKeg");
-            if (deleteKeg == null) throw new ArgumentNullException("deleteKeg");
-            if (getKegById == null) throw new ArgumentNullException("getKegById");
-            if (getKegByTapId == null) throw new ArgumentNullException("getAllKegsByOfficeId");
+            if (requestContextExtractor == null) throw new ArgumentNullException(nameof(requestContextExtractor));
+            if (mapper == null) throw new ArgumentNullException(nameof(mapper));
+            if (createKeg == null) throw new ArgumentNullException(nameof(createKeg));
+            if (deleteKeg == null) throw new ArgumentNullException(nameof(deleteKeg));
+            if (getKegById == null) throw new ArgumentNullException(nameof(getKegById));
+            if (getKegByTapId == null) throw new ArgumentNullException(nameof(getKegByTapId));
             if (getTapById == null) throw new ArgumentNullException(nameof(getTapById));
             if (updateTap == null) throw new ArgumentNullException(nameof(updateTap));
+            
             _requestContextExtractor = requestContextExtractor;
             _mapper = mapper;
             _createKeg = createKeg;
@@ -75,8 +76,8 @@ namespace BeerTap.ApiServices.Keg
 
         public async Task<ResourceCreationResult<ApiModel.Keg, int>> CreateAsync(ApiModel.Keg resource, IRequestContext context, CancellationToken cancellation)
         {
-            if (resource == null) throw new ArgumentNullException("resource");
-            if (context == null) throw new ArgumentNullException("context");
+            if (resource == null) throw new ArgumentNullException(nameof(resource));
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             try
             {
@@ -137,7 +138,7 @@ namespace BeerTap.ApiServices.Keg
 
         public async Task DeleteAsync(ResourceOrIdentifier<ApiModel.Keg, int> input, IRequestContext context, CancellationToken cancellation)
         {
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             try
             {

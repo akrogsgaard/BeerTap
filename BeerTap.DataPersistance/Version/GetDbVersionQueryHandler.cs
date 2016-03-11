@@ -11,7 +11,7 @@ namespace BeerTap.DataPersistance.Version
 
         public GetDbVersionQueryHandler(IDbContextFactory<BeerTapContext> contextFactory)
         {
-            if (contextFactory == null) throw new ArgumentNullException("contextFactory");
+            if (contextFactory == null) throw new ArgumentNullException(nameof(contextFactory));
 
             _contextFactory = contextFactory;
         }

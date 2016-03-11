@@ -11,13 +11,13 @@ namespace BeerTap.DomainServices.Tap.Commands
 
         public DeleteTapCommandHandler(ITapRepository tapRepository)
         {
-            if (tapRepository == null) throw new ArgumentNullException("TapRepository");
+            if (tapRepository == null) throw new ArgumentNullException(nameof(tapRepository));
             _tapRepository = tapRepository;
         }
 
         public async Task HandleAsync(DeleteTapCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            if (command == null) throw new ArgumentNullException("command");
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             await _tapRepository.DeleteAsync(command.Id, command.UserId).ConfigureAwait(false);
         }

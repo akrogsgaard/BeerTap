@@ -41,9 +41,9 @@ namespace BeerTap.ApiServices.PullBeer
                 IAsyncCommandHandler<UpdateTapCommand> updateTap
             )
         {
-            if (requestContextExtractor == null) throw new ArgumentNullException("requestContextExtractor");
-            if (updateKeg == null) throw new ArgumentNullException("updateKeg");
-            if (getKegByTapId == null) throw new ArgumentNullException("getKegByTapId");
+            if (requestContextExtractor == null) throw new ArgumentNullException(nameof(requestContextExtractor));
+            if (updateKeg == null) throw new ArgumentNullException(nameof(updateKeg));
+            if (getKegByTapId == null) throw new ArgumentNullException(nameof(getKegByTapId));
             if (getTapById == null) throw new ArgumentNullException(nameof(getTapById));
             if (updateTap == null) throw new ArgumentNullException(nameof(updateTap));
 
@@ -58,8 +58,8 @@ namespace BeerTap.ApiServices.PullBeer
 
         public async Task<ResourceCreationResult<ApiModel.SupportResources.PullBeer, int>> CreateAsync(ApiModel.SupportResources.PullBeer resource, IRequestContext context, CancellationToken cancellation)
         {
-            if (resource == null) throw new ArgumentNullException("resource");
-            if (context == null) throw new ArgumentNullException("context");
+            if (resource == null) throw new ArgumentNullException(nameof(resource));
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             try
             {

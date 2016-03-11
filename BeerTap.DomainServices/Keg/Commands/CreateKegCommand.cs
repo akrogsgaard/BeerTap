@@ -12,7 +12,7 @@ namespace BeerTap.DomainServices.Keg.Commands
 
         public CreateKegCommand(int tapId, string beerName, int capacity, int volume, int createdByUserId)
         {
-            if (beerName == null) throw new ArgumentNullException("beerName");
+            if (beerName == null) throw new ArgumentNullException(nameof(beerName));
             _tapId = tapId;
             _beerName = beerName;
             _capacity = capacity;

@@ -11,13 +11,13 @@ namespace BeerTap.DomainServices.Office.Commands
 
         public DeleteOfficeCommandHandler(IOfficeRepository officeRepository)
         {
-            if (officeRepository == null) throw new ArgumentNullException("officeRepository");
+            if (officeRepository == null) throw new ArgumentNullException(nameof(officeRepository));
             _officeRepository = officeRepository;
         }
 
         public async Task HandleAsync(DeleteOfficeCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            if (command == null) throw new ArgumentNullException("command");
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             await _officeRepository.DeleteAsync(command.Id, command.UserId).ConfigureAwait(false);
         }

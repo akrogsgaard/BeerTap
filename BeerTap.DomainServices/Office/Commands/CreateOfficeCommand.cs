@@ -9,7 +9,7 @@ namespace BeerTap.DomainServices.Office.Commands
 
         public CreateOfficeCommand(string name, int createdByUserId)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
             _name = name;
             _createdByUserId = createdByUserId;
         }

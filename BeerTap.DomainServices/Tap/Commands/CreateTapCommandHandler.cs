@@ -18,7 +18,7 @@ namespace BeerTap.DomainServices.Tap.Commands
 
         public CreateTapCommandHandler(ITapRepository tapRepository)
         {
-            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
+            if (tapRepository == null) throw new ArgumentNullException(nameof(tapRepository));
             _tapRepository = tapRepository;
         }
 
@@ -29,7 +29,7 @@ namespace BeerTap.DomainServices.Tap.Commands
 
         public async Task<int> HandleCustomAsync(CreateTapCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            if (command == null) throw new ArgumentNullException("command");
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             var tapDto = new TapDto
             {
