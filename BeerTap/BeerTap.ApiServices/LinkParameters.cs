@@ -5,11 +5,13 @@
     /// </summary>
     public class LinkParameters
     {
-        public LinkParameters(int officeId)
+        public LinkParameters(int officeId, int tapId)
         {
             OfficeId = officeId;
+            TapId = tapId;
         }
 
         public int OfficeId { get; private set; }
+        public int TapId { get; private set; }
     }
 }

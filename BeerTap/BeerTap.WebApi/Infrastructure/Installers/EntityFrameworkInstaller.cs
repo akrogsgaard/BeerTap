@@ -4,8 +4,8 @@ using BeerTap.DataPersistance.Repositories.Office;
 using BeerTap.DataPersistance.Repositories.Tap;
 using BeerTap.DataPersistance.Version;
 using BeerTap.DomainServices.Keg;
+using BeerTap.DomainServices.Keg.Commands;
 using BeerTap.DomainServices.Office;
-using BeerTap.DomainServices.Office.Commands;
 using BeerTap.DomainServices.Office.Queries;
 using BeerTap.DomainServices.Tap;
 using Castle.MicroKernel.Registration;
@@ -35,7 +35,7 @@ namespace BeerTap.WebApi.Infrastructure.Installers
 
         private static void RegisterCommands(IWindsorContainer container)
         {
-            container.Register(Classes.FromAssemblyContaining<CreateOfficeCommandHandler>().BasedOn(typeof(IAsyncCommandHandler<>)).WithServiceAllInterfaces());
+            container.Register(Classes.FromAssemblyContaining<CreateKegCommandHandler>().BasedOn(typeof(IAsyncCommandHandler<>)).WithServiceAllInterfaces());
         }
 
         static void RegisterQueries(IWindsorContainer container)

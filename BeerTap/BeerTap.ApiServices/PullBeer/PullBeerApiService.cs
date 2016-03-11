@@ -64,8 +64,9 @@ namespace BeerTap.ApiServices.PullBeer
             try
             {
                 var userId = _requestContextExtractor.ExtractUserIdFromRequest(context);
+                var tapId = this._requestContextExtractor.ExtractTapId<ApiModel.SupportResources.PullBeer>(context);
 
-                var option = await _getKegByTapId.HandleAsync(new GetKegByTapIdQuery(resource.TapId)).ConfigureAwait(false);
+                var option = await _getKegByTapId.HandleAsync(new GetKegByTapIdQuery(tapId)).ConfigureAwait(false);
                 var kegDto = option.EnsureValue(() => context.CreateNotFoundHttpResponseException<ApiModel.Keg>());
 
                 if (resource.Volume > kegDto.Volume)
@@ -73,10 +74,10 @@ namespace BeerTap.ApiServices.PullBeer
 
                 kegDto.Volume = kegDto.Volume - resource.Volume;
 
-                var command = new UpdateKegCommand(kegDto.Id, kegDto.TapId, kegDto.BeerName, kegDto.Capacity, kegDto.Volume, userId);
+                var command = new UpdateKegCommand(kegDto.Id, tapId, kegDto.BeerName, kegDto.Capacity, kegDto.Volume, userId);
                 await _updateKeg.HandleAsync(command).ConfigureAwait(false);
 
-                var tapOption = await _getTapById.HandleAsync(new GetTapByIdQuery(kegDto.TapId)).ConfigureAwait(false);
+                var tapOption = await _getTapById.HandleAsync(new GetTapByIdQuery(tapId)).ConfigureAwait(false);
                 var tapDto = tapOption.EnsureValue();
 
                 var kegState = GetKegState(tapDto.KegState, kegDto);

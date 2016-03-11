@@ -15,7 +15,7 @@ namespace BeerTap.WebApi.Hypermedia
         // custom self link
         protected override IEnumerable<ResourceLinkTemplate<ApiModel.PullBeer>> Links()
         {
-            yield return CreateLinkTemplate<LinkParameters>(CommonLinkRelations.Self, Uri, x => x.Parameters.OfficeId,  x => x.Resource.TapId);
+            yield return CreateLinkTemplate<LinkParameters>(CommonLinkRelations.Self, Uri, x => x.Parameters.OfficeId,  x => x.Parameters.TapId);
         }
 
         public override IResourceStateSpec<ApiModel.PullBeer, NullState, int> StateSpec
@@ -27,7 +27,7 @@ namespace BeerTap.WebApi.Hypermedia
                     {
                         Links =
                             {
-                                CreateLinkTemplate<LinkParameters>(LinkRelations.Tap, TapSpec.Uri, i => i.Parameters.OfficeId, i => i.Resource.TapId),
+                                CreateLinkTemplate<LinkParameters>(LinkRelations.Tap, TapSpec.Uri, i => i.Parameters.OfficeId, i => i.Parameters.TapId),
                             },
 
                         Operations =

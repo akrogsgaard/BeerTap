@@ -66,28 +66,6 @@ namespace BeerTap.DataPersistance.Repositories.Tap
             }
         }
 
-        public async Task<int> SaveNewAsync(TapDto TapDto)
-        {
-            try
-            {
-                var tapRecord = _recordMapper.Map(TapDto);
-
-                using (var context = _contextFactory.CreateContext())
-                {
-                    context.Taps.Add(tapRecord);
-                    await context.SaveChangesAsync().ConfigureAwait(false);
-
-                    return tapRecord.Id;
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                var exception = DbContextUtils.ConvertDbUpdateException(ex);
-                Logger.Error(new ExpandableLogMessage(exception.ToString(), new KeyValuePair<string, object>("failureMessage", exception.ToString())));
-                throw exception;
-            }
-        }
-
         public async Task UpdateAsync(TapDto tapDto)
         {
             try
@@ -96,12 +74,15 @@ namespace BeerTap.DataPersistance.Repositories.Tap
                 {
                     var tapRecord = await context.Taps.FindAsync(tapDto.Id).ConfigureAwait(false);
 
-                    tapRecord.KegId = tapDto.KegId;
-                    tapRecord.UpdatedByUserId = tapDto.UpdatedByUserId;
-                    tapRecord.UpdatedDateUtc = tapDto.UpdatedDateUtc;
+                    if (tapRecord != null)
+                    {
+                        tapRecord.KegId = tapDto.KegId;
+                        tapRecord.KegState = tapDto.KegState;
+                        tapRecord.UpdatedByUserId = tapDto.UpdatedByUserId;
+                        tapRecord.UpdatedDateUtc = tapDto.UpdatedDateUtc;
 
-                    context.Taps.Add(tapRecord);
-                    await context.SaveChangesAsync().ConfigureAwait(false);
+                        await context.SaveChangesAsync().ConfigureAwait(false);
+                    }
                 }
             }
             catch (DbUpdateException ex)
@@ -111,30 +92,5 @@ namespace BeerTap.DataPersistance.Repositories.Tap
                 throw exception;
             }
         }
-
-        public async Task DeleteAsync(int id, int userId)
-        {
-            try
-            {
-                using (var context = _contextFactory.CreateContext())
-                {
-                    var taxPartnerConfiguration = await context.Taps.FindAsync(id).ConfigureAwait(false);
-
-                    if (taxPartnerConfiguration == null)
-                        return;
-
-                    context.Taps.Remove(taxPartnerConfiguration);
-                    await context.SaveChangesAsync().ConfigureAwait(false);
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                var exception = DbContextUtils.ConvertDbUpdateException(ex);
-                Logger.Error(new ExpandableLogMessage(exception.ToString(), new KeyValuePair<string, object>("failureMessage", exception.ToString())));
-                throw exception;
-            }
-        }
-
-        
     }
 }

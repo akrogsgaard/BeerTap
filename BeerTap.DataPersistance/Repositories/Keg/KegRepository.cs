@@ -97,14 +97,17 @@ namespace BeerTap.DataPersistance.Repositories.Keg
                 {
                     var kegRecord = await context.Kegs.FindAsync(kegDto.Id).ConfigureAwait(false);
 
-                    kegRecord.TapId = kegDto.TapId;
-                    kegRecord.BeerName = kegDto.BeerName;
-                    kegRecord.Volume = kegDto.Volume;
-                    kegRecord.UpdatedByUserId = kegDto.UpdatedByUserId;
-                    kegRecord.UpdatedDateUtc = kegDto.UpdatedDateUtc;
+                    if (kegRecord != null)
+                    {
+                        kegRecord.TapId = kegDto.TapId;
+                        kegRecord.BeerName = kegDto.BeerName;
+                        kegRecord.Volume = kegDto.Volume;
+                        kegRecord.UpdatedByUserId = kegDto.UpdatedByUserId;
+                        kegRecord.UpdatedDateUtc = kegDto.UpdatedDateUtc;
 
-                    context.Kegs.Add(kegRecord);
-                    await context.SaveChangesAsync().ConfigureAwait(false);
+                        await context.SaveChangesAsync().ConfigureAwait(false);
+                    }
+                    
                 }
             }
             catch (DbUpdateException ex)

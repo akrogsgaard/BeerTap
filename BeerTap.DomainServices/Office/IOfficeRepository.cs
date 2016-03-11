@@ -9,8 +9,5 @@ namespace BeerTap.DomainServices.Office
         Task<OfficeDto> GetByIdAsync(int id);
         Task<IEnumerable<OfficeDto>> GetByNameAsync(string name);
         Task<IEnumerable<OfficeDto>> GetAllAsync();
-        Task<int> SaveNewAsync(OfficeDto officeDto);
-        Task UpdateAsync(OfficeDto officeDto);
-        Task DeleteAsync(int id, int userId);
     }
 }

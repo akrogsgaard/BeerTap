@@ -58,7 +58,7 @@
     <Compile Include="Keg\Commands\UpdateKegCommand.cs" />
     <Compile Include="Keg\Commands\UpdateKegCommandHandler.cs" />
     <Compile Include="Keg\Commands\CreateKegCommand.cs" />
-    <Compile Include="Keg\Commands\CreateOfficeCommandHandler.cs" />
+    <Compile Include="Keg\Commands\CreateKegCommandHandler.cs" />
     <Compile Include="Keg\Commands\DeleteKegCommand.cs" />
     <Compile Include="Keg\Commands\DeleteKegCommandHandler.cs" />
     <Compile Include="Keg\IKegRepository.cs" />
@@ -66,12 +66,6 @@
     <Compile Include="Keg\Queries\GetKegByTapIdQueryHandler.cs" />
     <Compile Include="Keg\Queries\GetKegByIdQuery.cs" />
     <Compile Include="Keg\Queries\GetKegByIdQueryHandler.cs" />
-    <Compile Include="Office\Commands\DeleteOfficeCommand.cs" />
-    <Compile Include="Office\Commands\DeleteOfficeCommandHandler.cs" />
-    <Compile Include="Office\Commands\UpdateOfficeCommand.cs" />
-    <Compile Include="Office\Commands\UpdateOfficeCommandHandler.cs" />
-    <Compile Include="Office\Commands\CreateOfficeCommandHandler.cs" />
-    <Compile Include="Office\Commands\CreateOfficeCommand.cs" />
     <Compile Include="Office\IOfficeRepository.cs" />
     <Compile Include="Office\Queries\GetAllOfficesQuery.cs" />
     <Compile Include="Office\Queries\GetAllOfficesQueryHandler.cs" />
@@ -81,11 +75,7 @@
     <Compile Include="Office\Queries\GetOfficeByIdQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tap\Commands\UpdateTapCommand.cs" />
-    <Compile Include="Tap\Commands\CreateTapCommand.cs" />
     <Compile Include="Tap\Commands\UpdateTapCommandHandler.cs" />
-    <Compile Include="Tap\Commands\CreateTapCommandHandler.cs" />
-    <Compile Include="Tap\Commands\DeleteTapCommand.cs" />
-    <Compile Include="Tap\Commands\DeleteTapCommandHandler.cs" />
     <Compile Include="Tap\ITapRepository.cs" />
     <Compile Include="Tap\Queries\GetTapByIdQuery.cs" />
     <Compile Include="Tap\Queries\GetTapByIdQueryHandler.cs" />

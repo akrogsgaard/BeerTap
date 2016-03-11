@@ -14,11 +14,6 @@ namespace BeerTap.Model.SupportResources
         public int Id { get; set; }
 
         /// <summary>
-        /// Idenfifier for the Tap replacing the Keg.
-        /// </summary>
-        public int TapId { get; set; }
-
-        /// <summary>
         /// The name of the beer in the Keg.
         /// </summary>
         public string BeerName { get; set; }

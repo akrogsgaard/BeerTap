@@ -8,8 +8,6 @@ namespace BeerTap.DomainServices.Tap
     {
         Task<TapDto> GetByIdAsync(int id);
         Task<IEnumerable<TapDto>> GetAllTapsByOfficeIdAsync(int officeId);
-        Task<int> SaveNewAsync(TapDto tapDto);
         Task UpdateAsync(TapDto tapDto);
-        Task DeleteAsync(int id, int userId);
     }
 }

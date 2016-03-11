@@ -20,7 +20,7 @@ namespace BeerTap.ApiServices.ReplaceKeg
     public class ReplaceKegApiService : ICreateAResourceAsync<ApiModel.SupportResources.ReplaceKeg, int>
     {
         private readonly IExtractDataFromARequestContext _requestContextExtractor;
-        private readonly IAsyncCommandHandler<CreateKegCommand> _createKeg;
+        ICreateKegCommandHandler _createKeg;
         private readonly IAsyncCommandHandler<DeleteKegCommand> _deleteKeg;
         private readonly IAsyncQueryHandler<GetTapByIdQuery, Option<TapDto>> _getTapById;
         private readonly IAsyncCommandHandler<UpdateTapCommand> _updateTap;
@@ -34,7 +34,7 @@ namespace BeerTap.ApiServices.ReplaceKeg
 
         public ReplaceKegApiService(
                 IExtractDataFromARequestContext requestContextExtractor,
-                IAsyncCommandHandler<CreateKegCommand> createKeg,
+                ICreateKegCommandHandler createKeg,
                 IAsyncCommandHandler<DeleteKegCommand> deleteKeg,
                 IAsyncQueryHandler<GetTapByIdQuery, Option<TapDto>> getTapById,
                 IAsyncCommandHandler<UpdateTapCommand> updateTap
@@ -65,16 +65,16 @@ namespace BeerTap.ApiServices.ReplaceKeg
                 var userId = _requestContextExtractor.ExtractUserIdFromRequest(context);
                 var tapId = _requestContextExtractor.ExtractTapId<ApiModel.SupportResources.ReplaceKeg>(context);
 
-                await _deleteKeg.HandleAsync(new DeleteKegCommand(resource.Id, userId));
-
-                var command = new CreateKegCommand(tapId, resource.BeerName, resource.Capacity, resource.Volume, userId);
-                await _createKeg.HandleAsync(command).ConfigureAwait(false);
-
                 var tapOption = await _getTapById.HandleAsync(new GetTapByIdQuery(tapId)).ConfigureAwait(false);
                 var tapDto = tapOption.EnsureValue();
 
+                await _deleteKeg.HandleAsync(new DeleteKegCommand(tapDto.KegId, userId));
+
+                var command = new CreateKegCommand(tapId, resource.BeerName, resource.Capacity, resource.Volume, userId);
+                var kegId = await _createKeg.HandleCustomAsync(command).ConfigureAwait(false);
+
                 //update the tap with the new KegId.
-                await _updateTap.HandleAsync(new UpdateTapCommand(tapDto.Id, tapDto.OfficeId, resource.Id, ApiModel.KegState.Full.ToString(), userId)).ConfigureAwait(false);
+                await _updateTap.HandleAsync(new UpdateTapCommand(tapDto.Id, tapDto.OfficeId, kegId, ApiModel.KegState.Full.ToString(), userId)).ConfigureAwait(false);
 
                 return new ResourceCreationResult<ApiModel.SupportResources.ReplaceKeg, int>(resource);
             }

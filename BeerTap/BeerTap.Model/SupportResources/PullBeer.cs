@@ -14,11 +14,6 @@ namespace BeerTap.Model.SupportResources
         public int Id { get; set; }
 
         /// <summary>
-        /// Idenfifier for the Tap being pulled from.
-        /// </summary>
-        public int TapId { get; set; }
-
-        /// <summary>
         /// The amount of beer being pulled from the Tap.
         /// </summary>
         public int Volume { get; set; }

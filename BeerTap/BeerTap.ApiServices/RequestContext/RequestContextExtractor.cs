@@ -24,7 +24,7 @@ namespace BeerTap.ApiServices.RequestContext
 
             var option = context.UriParameters.GetByName<int>("officeId");
             var officeId = option.EnsureValue(() => context.CreateHttpResponseException<TResource>("Cannot find office identifier in the uri", HttpStatusCode.BadRequest));
-            context.LinkParameters.Set(new LinkParameters(officeId));
+            context.LinkParameters.Set(new LinkParameters(officeId, 0));
 
             return officeId;
         }
@@ -33,9 +33,12 @@ namespace BeerTap.ApiServices.RequestContext
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
-            var option = context.UriParameters.GetByName<int>("tapId");
-            var tapId = option.EnsureValue(() => context.CreateHttpResponseException<TResource>("Cannot find tap identifier in the uri", HttpStatusCode.BadRequest));
-            context.LinkParameters.Set(new LinkParameters(tapId));
+            var officeOption = context.UriParameters.GetByName<int>("officeId");
+            var officeId = officeOption.EnsureValue(() => context.CreateHttpResponseException<TResource>("Cannot find office identifier in the uri", HttpStatusCode.BadRequest));
+
+            var tapOption = context.UriParameters.GetByName<int>("tapId");
+            var tapId = tapOption.EnsureValue(() => context.CreateHttpResponseException<TResource>("Cannot find tap identifier in the uri", HttpStatusCode.BadRequest));
+            context.LinkParameters.Set(new LinkParameters(officeId, tapId));
 
             return tapId;
         }

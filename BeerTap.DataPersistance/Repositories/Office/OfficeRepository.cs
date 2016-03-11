@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using BeerTap.DataPersistance.Entities;
@@ -9,7 +8,6 @@ using BeerTap.DomainServices.Office;
 using BeerTap.Transport;
 using IQ.Foundation.Logging;
 using IQ.Platform.Framework.Common.Mapping;
-using IQ.Platform.Messaging.Models;
 
 namespace BeerTap.DataPersistance.Repositories.Office
 {
@@ -79,78 +77,5 @@ namespace BeerTap.DataPersistance.Repositories.Office
                 return officeDtoRecords;
             }
         }
-
-        public async Task<int> SaveNewAsync(OfficeDto officeDto)
-        {
-            try
-            {
-                var officeRecord = _recordMapper.Map(officeDto);
-
-                using (var context = _contextFactory.CreateContext())
-                {
-                    context.Offices.Add(officeRecord);
-                    await context.SaveChangesAsync().ConfigureAwait(false);
-
-                    return officeRecord.Id;
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                var exception = DbContextUtils.ConvertDbUpdateException(ex);
-                Logger.Error(new ExpandableLogMessage(exception.ToString(), new KeyValuePair<string, object>("failureMessage", exception.ToString())));
-                throw exception;
-            }
-        }
-
-        public async Task UpdateAsync(OfficeDto officeDto)
-        {
-            try
-            {
-                using (var context = _contextFactory.CreateContext())
-                {
-                    var taxPartnerConfiguration = await context.Offices.FindAsync(officeDto.Id).ConfigureAwait(false);
-
-                    if (taxPartnerConfiguration != null)
-                    {
-                        taxPartnerConfiguration.Name = officeDto.Name;
-                        taxPartnerConfiguration.UpdatedByUserId = officeDto.UpdatedByUserId;
-                        taxPartnerConfiguration.UpdatedDateUtc = officeDto.UpdatedDateUtc;
-                    }
-
-                    await context.SaveChangesAsync().ConfigureAwait(false);
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                var exception = DbContextUtils.ConvertDbUpdateException(ex);
-                Logger.Error(new ExpandableLogMessage(exception.ToString(), new KeyValuePair<string, object>("failureMessage", exception.ToString())));
-                throw exception;
-            }
-        }
-
-        public async Task DeleteAsync(int id, int userId)
-        {
-            try
-            {
-                using (var context = _contextFactory.CreateContext())
-                {
-                    var taxPartnerConfiguration = await context.Offices.FindAsync(id).ConfigureAwait(false);
-
-                    if (taxPartnerConfiguration == null)
-                        return;
-
-                    context.Offices.Remove(taxPartnerConfiguration);
-                    await context.SaveChangesAsync().ConfigureAwait(false);
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                var exception = DbContextUtils.ConvertDbUpdateException(ex);
-                Logger.Error(new ExpandableLogMessage(exception.ToString(), new KeyValuePair<string, object>("failureMessage", exception.ToString())));
-                throw exception;
-            }
-        }
-
-        
     }
 }
